@@ -3,37 +3,26 @@ from fastapi.params import Body
 import requests
 ################################################
 app = FastAPI()
-# headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
-
-# x = requests.get('http://dexcom.invasso.com/api/dexcom/simulation', headers=headers)
-# y = x.json()
-
-
-# trend_name = y['trend']
-# reading_value =  180  #y['sensor_treading_value']
-# student_id = y['student_id']
-
-
 
 def get_result(student_id,reading, trend):
    
 
     
     if ((reading >= 80) and (reading <= 140)):
-        return {"value":reading,"Student_id": student_id, "Classification": 3}
+        return {"Student_id": student_id,"value":reading,"trend":trend,"Classification": 3}
         
         
     elif ((reading < 80) and (trend in ["Flat", "Double up", "Single up", "Forty_five up"])):
-        return {"value":reading,"Student_id": student_id, "Classification": 2}
+        return {"Student_id": student_id,"value":reading,"trend":trend, "Classification": 2,'alert':"yellow"}
         
     elif ((reading < 80) and (trend in ["Double down", "Single down", "Forty_five down"])):
-        return {"value":reading,"Student_id": student_id, "Classification": 1}
+        return {"Student_id": student_id,"value":reading,"trend":trend,"Classification": 1,'alert':"red"}
         
     elif ((reading > 140) and (trend in ["Double up", "Single up", "Forty_five up"])):
-        return {"value":reading,"Student_id": student_id, "Classification": 5}
+        return {"Student_id": student_id,"value":reading,"trend":trend, "Classification": 5,'alert':"red"}
         
     elif ((reading > 140) and (trend in ["Flat", "Double down", "Single down", "Forty_five down"])):
-        return {"value":reading,"Student_id": student_id, "Classification": 4}
+        return {"Student_id": student_id,"value":reading,"trend":trend, "Classification": 4,'alert':"yellow"}
        
         
   
