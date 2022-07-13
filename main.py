@@ -5,10 +5,10 @@ import requests
 app = FastAPI()
 
 def get_result(student_id,reading, trend):
-   
-
+    if ((reading >= 155) and (reading <= 165) and (trend in ["Flat"])):
+        return {"Student_id": student_id,"value":reading,"trend":trend,"Classification": 3}
     
-    if ((reading >= 80) and (reading <= 140)):
+    elif ((reading >= 80) and (reading <= 140)):
         return {"Student_id": student_id,"value":reading,"trend":trend,"Classification": 3}
         
         
