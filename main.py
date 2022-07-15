@@ -5,10 +5,8 @@ import requests
 app = FastAPI()
 
 def get_result(student_id,reading, trend):
-    if ((reading >= 155) and (reading <= 165) and (trend in ["Flat"])):
-        return {"Student_id": student_id,"value":reading,"trend":trend,"Classification": 3}
     
-    elif ((reading >= 80) and (reading <= 140)):
+    if ((reading >= 80) and (reading <= 140)):
         return {"Student_id": student_id,"value":reading,"trend":trend,"Classification": 3}
         
         
@@ -33,8 +31,18 @@ async def root():
     x = requests.get('http://dexcom.invasso.com/api/dexcom/simulation', headers=headers)
     y = x.json()
 
-
     trend_name = y['trend']
     reading_value =  y['sensor_treading_value']
     student_id = y['student_id']
-    return get_result(student_id,reading_value, trend_name)
+
+    if (('range' in y) and (reading_value >= int(y['range']['from'])) and (reading_value <= int(y['range']['to']))):
+        studentRange = y['range']
+        return {"Student_id": student_id,"Student_Range":studentRange,"value":reading_value,"trend":trend_name,"Classification": 3}
+
+    else:
+        return get_result(student_id,reading_value, trend_name)
+        
+        
+
+
+    
