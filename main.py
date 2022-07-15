@@ -3,7 +3,7 @@ from fastapi.params import Body
 import requests
 ################################################
 app = FastAPI()
-
+#### to run the code >>>   'https://dexcom-api.herokuapp.com/api/Dexcom_classification' ###
 def get_result(student_id,reading, trend):
     
     if ((reading >= 80) and (reading <= 140)):
@@ -34,7 +34,8 @@ async def root():
     trend_name = y['trend']
     reading_value =  y['sensor_treading_value']
     student_id = y['student_id']
-
+    
+    ### Special Cases ###
     if (('range' in y) and (reading_value >= int(y['range']['from'])) and (reading_value <= int(y['range']['to']))):
         studentRange = y['range']
         return {"Student_id": student_id,"Student_Range":studentRange,"value":reading_value,"trend":trend_name,"Classification": 3}
