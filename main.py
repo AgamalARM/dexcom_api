@@ -7,20 +7,20 @@ app = FastAPI()
 def get_result(student_id,reading, trend):
     
     if ((reading >= 80) and (reading <= 140)):
-        return {"Student_id": student_id,"value":reading,"trend":trend,"Classification": 3,'alert':"non"}
+        return {"Student_id": student_id,"value":reading,"trend":trend,"classification": 3,'alert':"non"}
         
         
     elif ((reading < 80) and (trend in ["Flat", "Double up", "Single up", "Forty_five up"])):
-        return {"Student_id": student_id,"value":reading,"trend":trend, "Classification": 2,'alert':"yellow"}
+        return {"Student_id": student_id,"value":reading,"trend":trend, "classification": 2,'alert':"yellow"}
         
     elif ((reading < 80) and (trend in ["Double down", "Single down", "Forty_five down"])):
-        return {"Student_id": student_id,"value":reading,"trend":trend,"Classification": 1,'alert':"red"}
+        return {"Student_id": student_id,"value":reading,"trend":trend,"classification": 1,'alert':"red"}
         
     elif ((reading > 140) and (trend in ["Double up", "Single up", "Forty_five up"])):
-        return {"Student_id": student_id,"value":reading,"trend":trend, "Classification": 5,'alert':"red"}
+        return {"Student_id": student_id,"value":reading,"trend":trend, "classification": 5,'alert':"red"}
         
     elif ((reading > 140) and (trend in ["Flat", "Double down", "Single down", "Forty_five down"])):
-        return {"Student_id": student_id,"value":reading,"trend":trend, "Classification": 4,'alert':"yellow"}
+        return {"Student_id": student_id,"value":reading,"trend":trend, "classification": 4,'alert':"yellow"}
        
         
   
@@ -38,7 +38,7 @@ async def root():
     ### Special Cases ###
     if (('range' in y) and (reading_value >= int(y['range']['from'])) and (reading_value <= int(y['range']['to']))):
         studentRange = y['range']
-        return {"Student_id": student_id,"Student_Range":studentRange,"value":reading_value,"trend":trend_name,"Classification": 3,'alert':"non"}
+        return {"Student_id": student_id,"Student_Range":studentRange,"value":reading_value,"trend":trend_name,"classification": 3,'alert':"non"}
 
     else:
         return get_result(student_id,reading_value, trend_name)
