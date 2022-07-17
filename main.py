@@ -7,7 +7,7 @@ app = FastAPI()
 def get_result(student_id,reading, trend):
     
     if ((reading >= 80) and (reading <= 140)):
-        return {"Student_id": student_id,"value":reading,"trend":trend,"Classification": 3}
+        return {"Student_id": student_id,"value":reading,"trend":trend,"Classification": 3,'alert':"non"}
         
         
     elif ((reading < 80) and (trend in ["Flat", "Double up", "Single up", "Forty_five up"])):
@@ -38,7 +38,7 @@ async def root():
     ### Special Cases ###
     if (('range' in y) and (reading_value >= int(y['range']['from'])) and (reading_value <= int(y['range']['to']))):
         studentRange = y['range']
-        return {"Student_id": student_id,"Student_Range":studentRange,"value":reading_value,"trend":trend_name,"Classification": 3}
+        return {"Student_id": student_id,"Student_Range":studentRange,"value":reading_value,"trend":trend_name,"Classification": 3,'alert':"non"}
 
     else:
         return get_result(student_id,reading_value, trend_name)
