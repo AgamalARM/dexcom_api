@@ -36,7 +36,7 @@ async def root():
     student_id = y['student_id']
     
     ### Special Cases ###
-    if (('range' in y) and (reading_value >= int(y['range']['from'])) and (reading_value <= int(y['range']['to']))):
+    if (('range' in y) and (reading_value >= int(y['range']['from'])) and (reading_value <= int(y['range']['to'])) and (trend_name == 'Flat')):
         studentRange = y['range']
         return {"student_id": student_id,"Student_Range":studentRange,"value":reading_value,"trend":trend_name,"classification": 3,'alert':"non"}
 
